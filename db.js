@@ -2,20 +2,19 @@ const Database = require('better-sqlite3');
 const fs = require('fs');
 const path = require('path');
 
-// Ruta de la base: en Render usar /data (persistente), local usa facturas.db
-const DB_PATH = process.env.DATABASE_PATH || path.join(__dirname, 'facturas.db');
+// En plan Free usamos la base local (se borra en cada redeploy)
+const DB_PATH = path.join(__dirname, 'facturas.db');
 
-// Asegura que exista la carpeta destino (importante si DATABASE_PATH apunta a /data)
-fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
-
-// Inicializa DB y esquema
+// Si no existe, se crea autom·ticamente
 const db = new Database(DB_PATH);
-db.pragma('journal_mode = WAL'); // mejor estabilidad y rendimiento
+db.pragma('journal_mode = WAL'); // m·s estable y r·pido
 
+// Cargar esquema desde schema.sql
 const schema = fs.readFileSync(path.join(__dirname, 'schema.sql'), 'utf8');
 db.exec(schema);
 
-// Funciones de acceso simples y s√≠ncronas (MVP)
+// --- Funciones de acceso a datos ---
+
 function crearCliente(nombre, cuit, email) {
   const info = db
     .prepare('INSERT INTO clientes (nombre,cuit,email) VALUES (?,?,?)')
@@ -33,8 +32,8 @@ function getCliente(id) {
 
 function crearFactura(data) {
   const stmt = db.prepare(`
-    INSERT INTO facturas (numero,fecha,a√±o,cliente_id,subtotal,impuesto,total)
-    VALUES (@numero,@fecha,@a√±o,@cliente_id,@subtotal,@impuesto,@total)
+    INSERT INTO facturas (numero,fecha,aÒo,cliente_id,subtotal,impuesto,total)
+    VALUES (@numero,@fecha,@aÒo,@cliente_id,@subtotal,@impuesto,@total)
   `);
   const info = stmt.run(data);
   return info.lastInsertRowid;
