@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Nueva factura</title>
+</head>
+<body class="bg-gray-50">
+<div class="max-w-3xl mx-auto p-4">
+  <h1 class="text-2xl font-bold mb-4">Nueva factura</h1>
+
+  <% if (clientes.length === 0) { %>
+    <div class="bg-yellow-100 text-yellow-900 p-3 rounded mb-3">
+      No hay clientes. <a class="underline" href="/clientes/nuevo">Crear cliente</a> y volver aquí.
+    </div>
+  <% } %>
+
+  <% if (errores && errores.length){ %>
+    <div class="bg-red-100 text-red-800 p-3 mb-3 rounded">
+      <ul><% errores.forEach(e => { %><li>• <%= e %></li><% }) %></ul>
+    </div>
+  <% } %>
+
+  <form method="post" action="/facturas" class="bg-white shadow rounded p-4 space-y-3">
+    <div class="grid grid-cols-2 gap-3">
+      <label class="block">Número
+        <input name="numero" class="border p-2 w-full" required value="<%= datos?.numero||'' %>">
+      </label>
+      <label class="block">Fecha
+        <input type="date" name="fecha" class="border p-2 w-full" required value="<%= datos?.fecha||new Date().toISOString().slice(0,10) %>">
+      </label>
+      <label class="block">Año
+        <input type="number" name="año" class="border p-2 w-full" required value="<%= datos?.año||new Date().getFullYear() %>">
+      </label>
+      <label class="block">Cliente
+        <select name="cliente_id" class="border p-2 w-full" required>
+          <% clientes.forEach(c=>{ %>
+            <option value="<%= c.id %>" <%= (datos?.cliente_id==c.id)?'selected':'' %>><%= c.nombre %></option>
+          <% }) %>
+        </select>
+      </label>
+    </div>
+
+    <label class="block">Impuesto (%)
+      <input name="imp" type="number" value="<%= datos?.impuesto_porcentaje||21 %>" class="border p-2">
+    </label>
+
+    <div id="items" class="space-y-2">
+      <div class="grid grid-cols-4 gap-2">
+        <input name="desc" placeholder="Descripción" class="border p-2 col-span-2">
+        <input name="cant" type="number" step="0.01" placeholder="Cant." class="border p-2">
+        <input name="precio" type="number" step="0.01" placeholder="Precio" class="border p-2">
+      </div>
+    </div>
+    <button type="button" onclick="addItem()" class="bg-gray-600 text-white px-3 py-1 rounded">+ Ítem</button>
+
+    <div class="flex gap-2">
+      <button class="bg-blue-700 text-white px-4 py-2 rounded">Guardar</button>
+      <a href="/" class="px-4 py-2 border rounded">Cancelar</a>
+    </div>
+  </form>
+</div>
+
+<script>
+function addItem(){
+  const div = document.createElement('div');
+  div.className = 'grid grid-cols-4 gap-2';
+  div.innerHTML = `
+    <input name="desc" placeholder="Descripción" class="border p-2 col-span-2">
+    <input name="cant" type="number" step="0.01" placeholder="Cant." class="border p-2">
+    <input name="precio" type="number" step="0.01" placeholder="Precio" class="border p-2">
+  `;
+  document.getElementById('items').appendChild(div);
+}
+</script>
+</body>
+</html>

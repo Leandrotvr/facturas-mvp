@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Nuevo cliente</title>
+</head>
+<body class="bg-gray-50">
+<div class="max-w-xl mx-auto p-4">
+  <h1 class="text-2xl font-bold mb-4">Nuevo cliente</h1>
+
+  <% if (errores && errores.length){ %>
+    <div class="bg-red-100 text-red-800 p-3 mb-3 rounded">
+      <ul><% errores.forEach(e => { %><li>• <%= e %></li><% }) %></ul>
+    </div>
+  <% } %>
+
+  <form method="post" action="/clientes" class="bg-white shadow rounded p-4 space-y-3">
+    <label class="block">Nombre
+      <input name="nombre" class="border p-2 w-full" required value="<%= datos?.nombre||'' %>">
+    </label>
+    <label class="block">CUIT
+      <input name="cuit" class="border p-2 w-full" value="<%= datos?.cuit||'' %>">
+    </label>
+    <label class="block">Email
+      <input name="email" type="email" class="border p-2 w-full" value="<%= datos?.email||'' %>">
+    </label>
+
+    <div class="flex gap-2">
+      <button class="bg-green-700 text-white px-4 py-2 rounded">Guardar</button>
+      <a href="/" class="px-4 py-2 border rounded">Cancelar</a>
+    </div>
+  </form>
+</div>
+</body>
+</html>

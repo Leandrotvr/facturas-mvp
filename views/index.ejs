@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Facturas - Listado</title>
+</head>
+<body class="bg-gray-50">
+  <div class="max-w-4xl mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">Gestor de Facturas (MVP)</h1>
+
+    <form class="flex gap-2 mb-4" method="get" action="/">
+      <input name="q" value="<%= q %>" placeholder="Buscar por número o cliente" class="border p-2 flex-1"/>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded">Buscar</button>
+      <a href="/facturas/nueva" class="bg-green-600 text-white px-4 py-2 rounded">Nueva factura</a>
+      <a href="/clientes/nuevo" class="px-4 py-2 rounded border">Nuevo cliente</a>
+    </form>
+
+    <table class="w-full bg-white shadow rounded">
+      <thead><tr class="bg-gray-100">
+        <th class="p-2 text-left">#</th>
+        <th class="p-2 text-left">Cliente</th>
+        <th class="p-2 text-left">Fecha</th>
+        <th class="p-2 text-left">Año</th>
+        <th class="p-2 text-right">Total</th>
+        <th class="p-2">Acciones</th>
+      </tr></thead>
+      <tbody>
+      <% facturas.forEach(f => { %>
+        <tr class="border-t">
+          <td class="p-2"><%= f.numero %></td>
+          <td class="p-2"><%= f.cliente %></td>
+          <td class="p-2"><%= f.fecha %></td>
+          <td class="p-2"><%= f.año %></td>
+          <td class="p-2 text-right">$ <%= f.total %></td>
+          <td class="p-2 text-center">
+            <a class="text-blue-700 underline" href="/facturas/<%= f.id %>">Ver</a>
+          </td>
+        </tr>
+      <% }) %>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
