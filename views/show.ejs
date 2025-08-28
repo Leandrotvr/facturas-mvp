@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
 <head>
   <meta charset="utf-8"/>
@@ -13,18 +13,18 @@
       <h2 class="text-xl font-semibold">Factura <%= f.numero %></h2>
       <div class="flex gap-2">
         <a class="bg-gray-700 text-white px-3 py-1 rounded" href="/facturas/<%= f.id %>/pdf">Descargar PDF</a>
-        <form method="post" action="/facturas/<%= f.id %>/borrar" onsubmit="return confirm('¿Borrar?')">
+        <form method="post" action="/facturas/<%= f.id %>/borrar" onsubmit="return confirm('Â¿Borrar?')">
           <button class="bg-red-600 text-white px-3 py-1 rounded">Borrar</button>
         </form>
       </div>
     </div>
-    <p class="text-sm text-gray-600">Fecha: <%= dayjs(f.fecha).format('DD/MM/YYYY') %> — Año: <%= f.año %></p>
+    <p class="text-sm text-gray-600">Fecha: <%= dayjs(f.fecha).format('DD/MM/YYYY') %> â€” AÃ±o: <%= f.aÃ±o %></p>
     <p class="mt-1">Cliente: <strong><%= f.cliente %></strong> | CUIT: <%= f.cuit || '-' %> | Email: <%= f.email || '-' %></p>
 
     <h3 class="mt-4 font-semibold">Items</h3>
     <table class="w-full">
       <thead><tr class="text-left border-b">
-        <th class="p-2">Descripción</th><th class="p-2">Cant.</th>
+        <th class="p-2">DescripciÃ³n</th><th class="p-2">Cant.</th>
         <th class="p-2">Precio</th><th class="p-2">Monto</th>
       </tr></thead>
       <tbody>
@@ -49,5 +49,7 @@
     </div>
   </div>
 </div>
+<%- include('partials/footer') %>
 </body>
 </html>
+

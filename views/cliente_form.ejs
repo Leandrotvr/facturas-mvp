@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
 <head>
   <meta charset="utf-8"/>
@@ -12,7 +12,7 @@
 
   <% if (errores && errores.length){ %>
     <div class="bg-red-100 text-red-800 p-3 mb-3 rounded">
-      <ul><% errores.forEach(e => { %><li>• <%= e %></li><% }) %></ul>
+      <ul><% errores.forEach(e => { %><li>â€¢ <%= e %></li><% }) %></ul>
     </div>
   <% } %>
 
@@ -33,5 +33,7 @@
     </div>
   </form>
 </div>
+<%- include('partials/footer') %>
 </body>
 </html>
+
